@@ -81,7 +81,7 @@ export async function downloadRecording(activity) {
   // xhr.send();
   return await axios
     .get(
-      'https://firebasestorage.googleapis.com/v0/b/phonerecs/o/Call%20Recording%2F2019%2F12%2F17%2F2019-12-17_17-26-09_mark_18176623722.wav?alt=media&token=f27751b3-9d79-4a27-8547-10cedb4c89b0',
+      'https://firebasestorage.googleapis.com/v0/b/phonerecs/o/Call%20Recording%2F2019%2F12%2F17%2F2019-12-17_17-26-09_mark_18176623722.wav?alt=media&token=',
     )
     // })
     .catch(function(error) {

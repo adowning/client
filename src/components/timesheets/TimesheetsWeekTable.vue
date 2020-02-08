@@ -110,14 +110,14 @@
           <img
             width="300px"
             :src="
-              `https://maps.googleapis.com/maps/api/staticmap?center=${item.startLocation.latitude},${item.startLocation.longitude}&markers=icon:https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png%7C${item.endLocation.latitude},${item.endLocation.longitude}&zoom=15&size=250x250&maptype=roadmap&key=AIzaSyDIQcp07_wQbydZtgqZQy7MpWZVEks8BDE`
+              `https://maps.googleapis.com/maps/api/staticmap?center=${item.startLocation.latitude},${item.startLocation.longitude}&markers=icon:https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png%7C${item.endLocation.latitude},${item.endLocation.longitude}&zoom=15&size=250x250&maptype=roadmap&key=`
             "
           />
           <v-icon large color="primary " class="ma-5 pa-5">mdi-clock</v-icon>
           <img
             width="300px"
             :src="
-              `https://maps.googleapis.com/maps/api/staticmap?center=${item.endLocation.latitude},${item.endLocation.longitude}&markers=icon:https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png%7C${item.endLocation.latitude},${item.endLocation.longitude}&zoom=15&size=250x250&maptype=roadmap&key=AIzaSyDIQcp07_wQbydZtgqZQy7MpWZVEks8BDE`
+              `https://maps.googleapis.com/maps/api/staticmap?center=${item.endLocation.latitude},${item.endLocation.longitude}&markers=icon:https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png%7C${item.endLocation.latitude},${item.endLocation.longitude}&zoom=15&size=250x250&maptype=roadmap&key=`
             "
           />
         </v-tooltip>

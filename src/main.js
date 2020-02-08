@@ -37,7 +37,7 @@ Vue.use(ParseVue, {
   appId: 'AndrewsApp',
   store: store,
   // router: router,
-  key: 'Asdfasdf1234',
+  key: process.env.VUE_APP_PARSE_MASTERKEY,
   serverURL: 'http://localhost:1337/parse',
   liveQueryServerURL: 'ws://localhost:1337/parse',
   // serverURL: 'http://35.184.15.252:1337/parse',

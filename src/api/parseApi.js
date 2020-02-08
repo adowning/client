@@ -27,7 +27,7 @@ export default class ParseApi {
       // serverURL: 'ws://parse-andrews.herokuapp.com/parse',
       serverURL: 'ws://localhost:1337/parse',
       // javascriptKey: '',
-      masterKey: 'Asdfasdf1234',
+      masterKey: process.env.VUE_APP_PARSE_MASTERKEY,
     })
     this.client.on('error', error => {
       this.handleParseError(error)
