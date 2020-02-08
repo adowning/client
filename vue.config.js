@@ -29,8 +29,24 @@ module.exports = {
           target: {
             target: 'appimage',
             // arch: ['armv7l'],
-            arch: ['amd64'],
+            arch: ['x64'],
           },
+        },
+        win: {
+          target: [
+            {
+              target: 'nsis',
+              arch: ['x64'],
+            },
+            {
+              target: 'zip',
+              arch: ['x64'],
+            },
+          ],
+        },
+        nsis: {
+          oneClick: false,
+          allowToChangeInstallationDirectory: true,
         },
       },
     },
