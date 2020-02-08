@@ -1,0 +1,15 @@
+#!/bin/zsh
+PROJECT_PROD=asdf123-1537543048053
+now=$(date +"%T")
+ZONE=us-central1-a
+instance_name=hooks-rebooter
+
+gcloud services enable compute.googleapis.com --project=$PROJECT_PROD
+gcloud compute instances start "--zone=$ZONE" "$instance_name"
+
+
+
+
+jsonvariable="{\"message\":\"terminated - ${now}\"}"
+#echo GCLOUD_SERVICE_KEY_TEST | base64 --decode -i > ${HOME}/gcloud-service-key.json
+#gcloud auth activate-service-account --key-file ${HOME}/.creds/googlekey.json

@@ -1,0 +1,172 @@
+$bunting: rgb(62, 57, 107);
+$logan: rgb(157, 157, 189);
+$titan-white: rgb(248, 250, 255);
+$athens-gray: rgb(238, 240, 247);
+$ghost: rgb(196, 200, 216);
+$blue-bell: rgb(166, 176, 216);
+$portage: rgb(137, 148, 198);
+$royal-blue: rgb(51, 105, 231);
+$deep-cove: rgb(5, 15, 44);
+
+$moon: #f5f5fa;
+$proton: #c5c9e0;
+$nova: #848ab8;
+$telluric: #5d6494;
+$solstice: #3a416f;
+$cosmos: #21243d;
+$nebula: #5468ff;
+$moon--1: #ebebf2;
+$neptune-2: #3a46a1;
+$neptune-1: #5560b5;
+$neptune: #707bcc;
+$neptune--1: #8d97e3;
+$neptune--2: #a6b0f9;
+$mercury-2: #008fba;
+$mercury-1: #2da7cb;
+$mercury: #5bbfdd;
+$mercury--1: #88d6ee;
+$mercury--2: #b5eeff;
+$jupiter-2: #3ab2bd;
+$jupiter-1: #61c5c8;
+$jupiter: #89d9d3;
+$jupiter--1: #b0ecde;
+$jupiter--2: #d7ffe9;
+$saturn-2: #ec8b63;
+$saturn-1: #f3a57e;
+$saturn: #f8be9a;
+$saturn--1: #fcd7b7;
+$saturn--2: #fdf1d4;
+$mars-2: #ed5a6a;
+$mars-1: #f27885;
+$mars: #f695a0;
+$mars--1: #fbb3ba;
+$mars--2: #ffd0d5;
+$venus-2: #ae3e88;
+$venus-1: #d44fa4;
+$venus: #ea71bc;
+$venus--1: #f89ad3;
+$venus--2: #ffcae9;
+
+//search box
+$custom: (
+  font-color: #5f6c72,
+  input-width: 400px,
+  input-height: 44px,
+  border-width: 2px,
+  border-radius: 4px,
+  input-border-color: $athens-gray,
+  input-focus-border-color: $royal-blue,
+  input-background: #ffffff,
+  input-focus-background: #ffffff,
+  font-size: 14px,
+  placeholder-color: $logan,
+  icon: sbx-icon-search-8,
+  icon-size: 18px,
+  icon-position: left,
+  icon-color: $royal-blue,
+  icon-background-opacity: 0,
+  icon-clear: sbx-icon-clear-3,
+  icon-clear-size: 10px,
+);
+
+#hero {
+  will-change: background-position;
+  transition: background-position 0.3s ease-in;
+  height: 200px;
+  z-index: 1;
+  width: 100%;
+  background-image: url('https://community.algolia.com/docsearch/assets/bg-docsearch.svg');
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#topBtn {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 1000;
+  border: none;
+  outline: none;
+  background-color: $royal-blue;
+  color: white;
+  font-weight: 500;
+  font-size: 0.9em;
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+.topnav {
+  margin-bottom: 16px;
+  padding: 12px 0;
+  background-color: white;
+  text-align: center;
+  position: relative;
+  @media (max-width: 800px) {
+    text-align: left;
+  }
+}
+
+.switch-hit-template {
+  position: absolute;
+  top: 12px;
+  right: 30px;
+
+  button {
+    line-height: 42px;
+    border: none;
+    background: #f7f9fb;
+    width: 40px;
+    border-radius: 6px;
+    margin-left: 8px;
+    display: inline-block;
+
+    &:focus,
+    &:active {
+      box-shadow: none;
+      outline: 0;
+    }
+
+    svg {
+      color: $logan;
+    }
+
+    &:hover {
+      cursor: pointer;
+
+      svg {
+        color: #5f6c72;
+      }
+    }
+
+    &.active svg {
+      color: $royal-blue;
+    }
+  }
+}
+
+.disable-hover {
+  pointer-events: none;
+}
+
+.tag {
+  font-size: 12px;
+  border-radius: 2px;
+  padding: 3px 4px 2px;
+  color: white;
+}
+
+.tag-live {
+  background-color: $royal-blue;
+}
+
+.tag-idea {
+  background-color: $moon;
+  color: $solstice;
+}
+
+.tag-in-progress {
+  background-color: #1dba28;
+}
