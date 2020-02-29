@@ -16,7 +16,7 @@ async function setSessionId() {
   const token = await axios.get(tokenUrl).then(
     function(httpResponse) {
       sessionId = httpResponse.data.Response.Context.Session.SessionId
-      // console.log(httpResponse.data.Response.Context.Session.SessionId)
+      // //console.log(httpResponse.data.Response.Context.Session.SessionId)
       return httpResponse.data.Response.Context.Session.SessionId
     },
     function(httpResponse) {
@@ -116,12 +116,12 @@ function buildFilename(direction, employeeName, date, phoneNumber) {
   } else {
     url = `Call Recording/${moment(date).format('YYYY/MM/DD/YYYY-MM-DD_HH-mm-ss')}_${phoneNumber}_${employeeName}.wav`
   }
-  // console.log(url)
+  // //console.log(url)
   return url
 }
 
 export async function setProfiles(context) {
-  console.log(context.rootState.User)
+  //console.log(context.rootState.User)
   profiles = context.rootState.User.employeeProfiles
 }
 export function setCustomers(_customers) {
@@ -207,7 +207,7 @@ export function Sdr2Callrecord(sdr) {
 
         raw,
       )
-      // console.log(name)
+      // //console.log(name)
       sdr.recordingLocation = name
     }
 

@@ -1,16 +1,41 @@
 <template>
   <ais-instant-search :search-client="searchClient" index-name="customers">
-    <ais-search-box placeholder="Search here…" class="searchbox mt-12 mb-0 pb-0" />
+    <ais-search-box placeholder="Search here…" class="searchbox mt-12 ml-6 mb-0 pb-0" />
     <v-list nav flat dense class=" mx-2 px-0">
-      <v-list-item-group v-model="model" active-class="border" class=" mx-0 px-0" color="indigo">
+      <v-list-item-group v-model="model" active-class="border" class=" ml-6  mx-0 px-0" color="indigo">
         <app-infinite-hits>
           <template slot="item" slot-scope="{ item }">
-            <v-list-item class="mb-0 mx-0 px-1">
-              <!-- <v-list-item-avatar>
+            <v-card flat>
+              <v-layout row wrap :class="`pa-3  ${item.disposition}`">
+                <v-flex xs10 md4>
+                  <div class="caption grey--text">ACCOUNT NAME</div>
+                  <div>{{ item.accountName }}</div>
+                </v-flex>
+                <v-flex xs6 sm4 md3>
+                  <div class="caption grey--text">PHONE</div>
+                  <div>{{ item.phone1 }}</div>
+                </v-flex>
+                <v-flex xs6 sm4 md2>
+                  <div class="caption grey--text">DATE</div>
+                  <div>{{ item.acquisitionDate | moment('DD-MM-YYYY') }}</div>
+                </v-flex>
+
+                <v-flex xs2 sm4 md2>
+                  <div class="right">
+                    <!-- <v-chip small :class="`${item.disposition} white--text caption my-2`">{{
+                      item.disposition
+                    }}</v-chip> -->
+                  </div>
+                </v-flex>
+              </v-layout>
+              <v-divider></v-divider>
+            </v-card>
+            <!-- <v-list-item class="mb-0 mx-0 px-1">
+              <v-list-item-avatar>
                 <v-btn icon @click="createNewOrder(item.accountID)">
                   <v-icon color="success">fa-clock</v-icon>
                 </v-btn>
-              </v-list-item-avatar> -->
+              </v-list-item-avatar>
 
               <v-list-item-content style="max-width: 150px;">
                 <v-list-item-title><ais-highlight :hit="item" attribute="accountName"/></v-list-item-title>
@@ -23,11 +48,11 @@
                 <v-list-item-subtitle> {{ item.city }}, {{ item.zip }} {{ item.state }} </v-list-item-subtitle>
               </v-list-item-content>
               <v-row justify="end" style="max-width: 90px;">
-                <!-- <v-list-item-action class="mx-0 px-0" style="max-width: 10px;">
+                <v-list-item-action class="mx-0 px-0" style="max-width: 10px;">
                   <v-btn icon style="max-width: 10px;">
                     <v-icon color="success">fa-map</v-icon>
                   </v-btn>
-                </v-list-item-action> -->
+                </v-list-item-action>
                 <customer-detail :customer="item"></customer-detail>
                 <v-list-item-action class="mx-0 mr-4" style="max-width: 10px;">
                   <v-btn icon style="max-width: 10px;">
@@ -35,7 +60,7 @@
                   </v-btn>
                 </v-list-item-action>
               </v-row>
-            </v-list-item>
+            </v-list-item> -->
           </template>
         </app-infinite-hits>
       </v-list-item-group>
@@ -45,7 +70,7 @@
 
 <script>
 import { ipcRenderer } from 'electron'
-// import AppInfiniteHits from '@/components/InfiniteHits'
+import AppInfiniteHits from '@/components/InfiniteHits'
 // import CustomerDetail from '@/components/accounts/CustomerDetail'
 import algoliasearch from 'algoliasearch/lite'
 
@@ -53,7 +78,7 @@ import 'instantsearch.css/themes/algolia-min.css'
 
 export default {
   components: {
-    // AppInfiniteHits,
+    AppInfiniteHits,
     // CustomerDetail
   },
   data() {
@@ -65,7 +90,7 @@ export default {
   },
   methods: {
     callCustomer(phoneNumber) {
-      console.log(phoneNumber)
+      //console.log(phoneNumber)
     },
 
     createNewOrder(accountID) {

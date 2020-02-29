@@ -5,10 +5,11 @@
       <snack-bar />
       <side-nav v-if="user"></side-nav>
       <transition name="fade" mode="out-in">
-        <v-container class="fill-height ma-0 pa-0 ml-12" fluid>
+        <v-container class="fill-height heigh ma-0 pa-0 ml-12" fluid>
           <router-view></router-view>
         </v-container>
       </transition>
+      <dev-footer />
     </div>
   </v-app>
 </template>
@@ -16,6 +17,7 @@
 import NavBar from '@/components/NavBar'
 import SideNav from '@/components/SideNav'
 import SnackBar from '@/components/SnackBar.vue'
+import DevFooter from '@/components/DevFooter.vue'
 import { mapState, mapActions, mapGetters } from 'vuex'
 
 export default {
@@ -24,6 +26,7 @@ export default {
     SnackBar,
     NavBar,
     SideNav,
+    DevFooter,
   },
   data: () => ({
     // drawer: null,
@@ -42,7 +45,17 @@ export default {
   async created() {
     this.$vuetify.theme.dark = this.darkTheme
   },
-  mounted() {
+  async mounted() {
+    var _user = await parseApi.currentUser()
+    if (_user != null) {
+      // parseApi.hydrateAll(user)
+      var user = _user.toJSON()
+      await this.$store.dispatch('authentication/autoLogin', user)
+      this.$router.push('/dashboard')
+    } else {
+      parseApi.logoutUser()
+      this.$router.push('/login')
+    }
     const params = {
       direction: 'incoming',
       employeeName: 'mark',
@@ -50,7 +63,7 @@ export default {
       phoneNumber: '19035661416',
     }
     this.$electron.ipcRenderer.on('message-from-worker', (event, data) => {
-      console.log('command hit')
+      //console.log('command hit')
       if (typeof data.command === 'undefined') {
         console.error('IPC message is missing command string')
         return
@@ -72,7 +85,7 @@ export default {
       this.$vuetify.theme.dark = value
     },
     user(val) {
-      // console.log(val)
+      // //console.log(val)
       // this.$router.push('dashboard')
     },
   },

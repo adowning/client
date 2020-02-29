@@ -1,8 +1,33 @@
+const webpack = require('webpack')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+
 module.exports = {
   // transpileDependencies: ['vuetify'],
   configureWebpack: {
     devtool: 'source-map',
+    plugins: [
+      // new webpack.NormalModuleReplacementPlugin(/^any-promise$/, 'bluebird'),
+      new CopyWebpackPlugin([
+        {
+          from: 'node_modules/push-receiver/src/gcm/checkin.proto',
+          to: 'dist_electron/checkin',
+          toType: 'file',
+        },
+      ]),
+    ],
   },
+  // devServer: {
+  // proxy: {
+  // '/': {
+  //   target: 'https://app.ashdevtools.com/',
+  //   ws: true,
+  //   changeOrigin: true,
+  // },
+  // '^/foo': {
+  //   target: '<other_url>',
+  // },
+  // },
+  // },
   pages: {
     index: {
       entry: 'src/main.js', //entry for the public page
@@ -14,10 +39,11 @@ module.exports = {
       template: 'public/maps.html',
       filename: 'maps.html',
     },
-    worker: {
-      entry: 'src/worker.js',
-      template: 'public/worker.html',
-      filename: 'worker.html',
+
+    notes: {
+      entry: 'src/notes/notes.js',
+      template: 'public/notes.html',
+      filename: 'notes.html',
     },
   },
   pluginOptions: {

@@ -16,14 +16,14 @@ export default {
   mixins: [createWidgetMixin({ connector: connectInfiniteHits })],
   methods: {
     visibilityChanged(isVisible) {
-      console.log('isVisible', isVisible)
+      //console.log('isVisible', isVisible)
       if (isVisible && !this.state.isLastPage) {
         this.state.showMore()
       }
     }
 
     // onClickItem(e) {
-    //   console.log('clickd', e)
+    //   //console.log('clickd', e)
     //   // https://six.servicemonster.net/desktop#accounts/account/b0bcf442-27ec-e111-834a-002590274606?tab=Details&gridFilter=All+Activities
     //   tabStore.newTab({
     //     url:

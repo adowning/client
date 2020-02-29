@@ -278,7 +278,7 @@ export default {
       parseApi.logoutUser()
     },
     handleWebviewPages(webview, page) {
-      console.log(webview, page)
+      //console.log(webview, page)
       if (page == '/home') {
         return this.logout()
       }

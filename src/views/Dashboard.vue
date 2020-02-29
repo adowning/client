@@ -1,8 +1,6 @@
 <template>
   <v-container id="dashboard" class="mt-6 ma-0 pa=0 ml-10 mr-0">
     <online-now />
-    <v-btn @click="test">test</v-btn>
-    <v-btn @click="test2">test2</v-btn>
   </v-container>
   <!-- </div> -->
 </template>
@@ -64,19 +62,19 @@ export default {
             return moment(sheet.startTimestamp) > new moment().subtract(90, 'days')
           })
           var calls = this.callrecords.filter(function(callrecord) {
-            // console.log(moment(callrecord.startTime))
+            // //console.log(moment(callrecord.startTime))
             return moment(callrecord.startTime) > new moment().subtract(90, 'days')
           })
           var i = 0
-          // console.log(tsheets.length)
-          // console.log(calls.length)
+          // //console.log(tsheets.length)
+          // //console.log(calls.length)
           // for (var x = 0; x < 90; x++) {
           // var now = moment()
           // var day = now.subtract(x, 'days')
           var logToday = false
           calls.forEach(call => {
             // stats.calls.add(call)
-            // console.log(moment(call.startTime).hour())
+            // //console.log(moment(call.startTime).hour())
             if (call.disposition == 'Cancelled') {
               stats.disposition.missed.push(call)
               this.addMissedCall()
@@ -91,11 +89,11 @@ export default {
           //   if (now.isSame(sheet.startTime, 'days')) {
           //     logToday = true
           //     var start = sheet.startTime
-          //     // console.log(i++)
+          //     // //console.log(i++)
           //     calls.forEach(call => {
           //       if (call.starTime < sheet.endTimestamp && call.startTime >= sheet.starTimestamp) {
           //         stats.calls.add(call)
-          //         console.log(call)
+          //         //console.log(call)
           //         if (call.disposition == 'Missed') {
           //           stats.disposition.missed.push(call)
           //           this.addMissedCall()
@@ -120,10 +118,10 @@ export default {
   },
   async mounted() {
     // this.timesheets = getTimesheetsByUser(this.user.objectId)
-    // console.log(this.$store)
+    // //console.log(this.$store)
     // var stats = await generateUserStats(this.$store)
     this.$electron.ipcRenderer.on('get-machine-id', (event, data) => {
-      // console.log(data)
+      // //console.log(data)
     })
   },
 
@@ -134,33 +132,13 @@ export default {
       }
     },
     // callrecords(val) {
-    //   console.log(val.length)
+    //   //console.log(val.length)
     //   if (val.length) {
     //     this.stats = generateUserStats(this.$store)
     //   }
     // },
   },
   methods: {
-    async test() {
-      // User's location
-      const userGeoPoint = this.$store.state.profiles.profiles[0].lastLocation
-      const parseConfig = await parseApi.getParseConfig()
-      console.log(parseConfig.get('OfficeLocation').latitude)
-      console.log(typeof parseConfig.get('OfficeLocation').longitude)
-      var point = new Parse.GeoPoint({
-        latitude: parseConfig.get('OfficeLocation').latitude,
-        longitude: parseConfig.get('OfficeLocation').longitude,
-      })
-      var GameScore = Parse.Object.extend('GameScore')
-      const query = new Parse.Query('Profile')
-      query.near('lastLocation', point)
-      query.limit(10)
-      const placesObjects = await query.find()
-      console.log(placesObjects)
-    },
-    test2() {
-      this.$electron.ipcRenderer.send('get-machine-id')
-    },
     addMissedCall: function() {
       // var arr = this.series.slice()
       this.series[0]++

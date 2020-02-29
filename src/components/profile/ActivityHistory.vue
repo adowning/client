@@ -1,11 +1,11 @@
 <template>
   <div>
     <!-- <v-container fluid> -->
-    <v-row class="mx-0 px-0">
+    <!-- <v-row class="mx-0 px-0">
       <v-combobox v-model="select" :items="items" label="Filter" dense multiple chips></v-combobox>
-    </v-row>
+    </v-row> -->
     <!-- </v-container> -->
-    <v-timeline align-top dense class="pt-0">
+    <v-timeline align-top dense class="pt-3">
       <!-- <v-timeline-item hide-dot> </v-timeline-item> -->
       <v-container id="scroll-target" style="max-height: 480px" class="overflow-y-auto ma-0 pa-0">
         <v-lazy
@@ -222,7 +222,7 @@ import moment from 'moment'
 
 function filterByValue(array, string) {
   return array.filter(function(item) {
-    console.log(item.type.toLowerCase(), string.toLowerCase())
+    //console.log(item.type.toLowerCase(), string.toLowerCase())
     return item.type.toLowerCase() == string.toLowerCase()
   })
   // return array.filter(o =>
@@ -335,25 +335,25 @@ export default {
     onScroll(e) {
       this.offsetTop = e.target.scrollTop
     },
-    async getRecording(activity) {
-      console.log('asdf', activity)
-      axios({
-        url: 'https://firebasestorage.googleapis.com/v0/b/phonerecs/o/' + activity.recordingLocation,
-        method: 'GET',
-        responseType: 'blob', // important
-      }).then(response => {
-        console.log(response)
-        const url = window.URL.createObjectURL(new Blob([response.data]))
-        const link = document.createElement('a')
-        link.href = url
-        link.setAttribute('download', 'asdf.wav')
-        document.body.appendChild(link)
-        link.click()
-      })
+    // async getRecording(activity) {
+    //   //console.log('asdf', activity)
+    //   axios({
+    //     url: 'https://firebasestorage.googleapis.com/v0/b/phonerecs/o/' + activity.recordingLocation,
+    //     method: 'GET',
+    //     responseType: 'blob', // important
+    //   }).then(response => {
+    //     //console.log(response)
+    //     const url = window.URL.createObjectURL(new Blob([response.data]))
+    //     const link = document.createElement('a')
+    //     link.href = url
+    //     link.setAttribute('download', 'asdf.wav')
+    //     document.body.appendChild(link)
+    //     link.click()
+    //   })
 
-      // var dl = await downloadRecording(activity)
-      // console.log(dl)
-    },
+    //   // var dl = await downloadRecording(activity)
+    //   // //console.log(dl)
+    // },
   },
   computed: {
     //   activities: {

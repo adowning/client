@@ -5,7 +5,7 @@ import uuid from 'uuid'
 
 const mutations = {
   SET_CURRENT_USER: (state, { user }) => {
-    console.log(user)
+    //console.log(user)
     state.currentUser = { ...state.currentUser, user }
   },
   SET_CURRENT_CREDS: (state, { credentials }) => {
@@ -49,7 +49,7 @@ const getters = {
 
 const actions = {
   LOGIN: async (context, { name, password }) => {
-    console.log(name, password)
+    //console.log(name, password)
     try {
       let creds
       if (!name || !password) {
@@ -64,7 +64,7 @@ const actions = {
       context.commit('SET_CURRENT_CREDS', currentCredentials)
       return context.dispatch('setSubscriptions', false)
     } catch (e) {
-      console.log(e)
+      console.error(e)
       context.dispatch('SET_LOADING', false)
       global.updateBus.$emit('showSnackBar', {
         show: true,

@@ -21,12 +21,12 @@ export const generateUserStats = async store => {
   var timesheets = store.state.timesheets.timesheets.filter(function(sheet) {
     return moment(sheet.startTimestamp) > new moment().subtract(30, 'days')
   })
-  console.log(timesheets.length)
+  //console.log(timesheets.length)
 
   var callrecords = store.state.callrecords.callrecords.filter(function(callrecord) {
     return moment(callrecord.startTimestamp) > new moment().subtract(30, 'days')
   })
-  console.log(callrecords.length)
+  //console.log(callrecords.length)
   var i = 0
   var activities = []
   for (var x = 0; x < 30; x++) {
@@ -37,9 +37,9 @@ export const generateUserStats = async store => {
       if (now.isSame(sheet.startTime, 'days')) {
         logToday = true
         var start = sheet.startTime
-        // console.log(i++)
+        // //console.log(i++)
         callrecords.forEach(call => {
-          console.log(call, sheet.starTimestamp)
+          //console.log(call, sheet.starTimestamp)
           if (call.starTime < sheet.endTimestamp && call.startTime >= sheet.starTimestamp) {
             activities.add(call)
           }
@@ -49,6 +49,6 @@ export const generateUserStats = async store => {
     if (logToday == true) {
     }
   }
-  console.log(activities.length)
+  //console.log(activities.length)
   return activities
 }

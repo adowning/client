@@ -147,7 +147,7 @@ export default {
   },
   async mounted() {
     // if (Parse.User.current() == undefined || null) {
-    //   console.log('i got a 209')
+    //   //console.log('i got a 209')
     //   await Parse.User.logOut()
     //   const err = 'null user, redirecting to login'
     //   this.updateBus.$emit('showSnackBar', {

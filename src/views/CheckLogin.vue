@@ -26,12 +26,12 @@ export default {
   watch: {
     user: {
       handler(user) {
-        console.log('use', user)
+        //console.log('use', user)
 
         if (user === undefined) return
-        console.log('igots a user')
+        //console.log('igots a user')
         if (this.$route.query.redirectUrl === this.$route.path) {
-          console.log('giong to /')
+          //console.log('giong to /')
 
           this.$router.push('/')
         }
@@ -39,7 +39,7 @@ export default {
         const redirectUrl = isNil(user)
           ? `/login?redirectUrl=${this.$route.query.redirectUrl}`
           : this.$route.query.redirectUrl
-        console.log('rdurl = ', redirectUrl)
+        //console.log('rdurl = ', redirectUrl)
 
         this.$router.push(redirectUrl)
       },

@@ -12,15 +12,15 @@ export default {
       //     const query = new Parse.Query(className)
       //     let subscription = await query.subscribe()
       //     subscription.on('create', object => {
-      //       console.log('create')
+      //       //console.log('create')
       //       context.commit('create' + className, object)
       //     })
       //     subscription.on('update', object => {
-      //       console.log('update')
+      //       //console.log('update')
       //       context.commit('update' + className, object)
       //     })
       //     subscription.on('delete', object => {
-      //       console.log('delete')
+      //       //console.log('delete')
       //       context.commit('delete' + className, object)
       //     })
       //   }

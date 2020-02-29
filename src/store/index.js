@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import User from './modules/User'
+import app from './modules/app'
 import Timesheet from './modules/Timesheet'
 import Callrecord from './modules/Callrecord'
 import Subscriptions from './modules/Subscriptions'
@@ -8,30 +8,10 @@ import authentication from './modules/authentication'
 import timesheets from './modules/timesheets'
 import profiles from './modules/profiles'
 import callrecords from './modules/callrecords'
-
-import app from './modules/app'
+import devices from './modules/devices'
+import tasks from './modules/tasks'
 
 Vue.use(Vuex)
-
-// const mutations = {
-//   SAVE_LOADING: (state, loading) => {
-//     state.loading = loading
-//     // Vue.set(state.loading, loading) /* false means user not found */
-//   },
-// }
-// const getters = {
-//   loading(state, getters) {
-//     return state.loading
-//   },
-// }
-// const actions = {
-//   SET_LOADING: ({ commit, state }, { loading }) => {
-//     // return state.users[id]
-//     //   ? Promise.resolve(state.users[id])
-//     //   : fetchUser(id).then(user => commit('SET_USER', { id, user }))
-//     return commit('SAVE_LOADING', { loading })
-//   },
-// }
 
 export default new Vuex.Store({
   state: {
@@ -61,6 +41,8 @@ export default new Vuex.Store({
     timesheets,
     profiles,
     callrecords,
+    devices,
+    tasks,
     // User,
     // Timesheet,
     // Callrecord,

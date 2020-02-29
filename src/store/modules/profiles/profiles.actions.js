@@ -5,7 +5,7 @@ export default {
    * Fetch profiles of current loggedin profile
    */
   // getUserProfile: async ({ rootState, commit }, user) => {
-  //   console.log(user)
+  //   //console.log(user)
   //   const profile = await getUserProfile(user)
   //   commit('setUserProfile', profile)
   // },

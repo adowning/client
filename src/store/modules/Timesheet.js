@@ -90,7 +90,7 @@ export default {
       let subscription = await query.subscribe()
 
       subscription.on('create', object => {
-        console.log('create')
+        //console.log('create')
 
         // let timesheet = Object.assign({}, object.attributes)
         // timesheet.id = object.id
@@ -98,7 +98,7 @@ export default {
         context.dispatch('updateTimesheets')
       })
       subscription.on('delete', object => {
-        console.log('delete')
+        //console.log('delete')
 
         // let timesheet = Object.assign({}, object.attributes)
         // timesheet.id = object.id
@@ -106,13 +106,13 @@ export default {
         context.dispatch('updateTimesheets')
       })
       subscription.on('update', object => {
-        console.log('update')
+        //console.log('update')
         // let timesheet = Object.assign({}, object.attributes)
         // timesheet.id = object.id
         // context.commit(MUTATIONS.updateTimesheet, timesheet)
 
         // if (item != -1) {
-        //   console.log(item)
+        //   //console.log(item)
         context.dispatch('updateTimesheets')
         // context.commit(MUTATIONS.removeTimesheet, timesheet)
         // context.commit(MUTATIONS.addTimesheet, timesheet)
@@ -138,14 +138,14 @@ export default {
       //     // subscribe to new values
       //     let subscription = await query.subscribe()
 
-      //     // console.log(query)
+      //     // //console.log(query)
       //     subscription.on('create', object => {
       //       let timesheet = Object.assign({}, entity.attributes)
       //       timesheet.id = entity.id
       //       commit(MUTATIONS.pushTimesheet, timesheet)
       //     })
       //     subscription.on('update', object => {
-      //       console.log('updating')
+      //       //console.log('updating')
       //       let timesheet = Object.assign({}, object.attributes)
       //       const item = context.state.Timesheet.timesheets.filter(
       //         x => x.id === timesheet.id

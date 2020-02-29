@@ -64,7 +64,7 @@
             <v-icon>mdi-phone</v-icon>
           </v-list-item-icon>
           <v-list-item-content class="d-flex align-start">
-            <v-list-item-title class="d-flex align-start" v-text="user.officePhoneInfo.ip"></v-list-item-title>
+            <v-list-item-title class="d-flex align-start" v-text="user.officePhone.ip"></v-list-item-title>
             <v-list-item-subtitle class="d-flex align-start">Deskphone</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
@@ -177,7 +177,7 @@ export default {
   },
   methods: {
     async onDecode(decodedString) {
-      console.log(decodedString)
+      //console.log(decodedString)
       // await this.$parse.run('clock-user', {
       //   username: this.user.username,
       // })
@@ -185,21 +185,20 @@ export default {
       this.dialog = false
     },
     async onDecodeOut(decodedString) {
-      console.log(decodedString)
+      //console.log(decodedString)
       // await this.$parse.run('clock-user', {
       //   username: this.user.username,
       // })
       this.punchOutDialog = false
     },
     async punchOutDialog() {
-      console.log('clock punched')
+      //console.log('clock punched')
     },
     async punchClock() {
       if (process.env.NODE_ENV == 'development') {
-        console.log('punching clock in dev mode')
-        await Parse.Cloud.run('clock-user', {
-          username: 'admin',
-        })
+        //console.log('punching clock in dev mode')
+
+        await parseApi.createTimesheetForCurrentProfile()
       } else {
         this.dialog = true
       }
@@ -227,11 +226,11 @@ export default {
       this.message = 'completed...'
     },
     handleCompleted(response, form, xhr) {
-      console.log(form, xhr)
+      //console.log(form, xhr)
       this.message = 'upload completed.'
     },
     handlerError(message, type, xhr) {
-      console.log(xhr)
+      //console.log(xhr)
       this.message = 'Oops! Something went wrong...'
     },
     validate() {
@@ -246,7 +245,7 @@ export default {
       this.$refs.form.resetValidation()
     },
     uploadPhoto() {
-      console.log('asdf')
+      //console.log('asdf')
     },
     setErrorMessage(errorMessage) {
       this.errorMessage = errorMessage

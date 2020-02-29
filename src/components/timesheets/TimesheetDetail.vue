@@ -197,9 +197,9 @@ export default {
         tempArr.push(this.selectedSheet[0])
 
         this.callrecords.forEach(record => {
-          // console.log(this.selectedSheet[0].startTimestamp)
-          // console.log(record.startTime)
-          // console.log(this.selectedSheet[0].endTimestamp)
+          // //console.log(this.selectedSheet[0].startTimestamp)
+          // //console.log(record.startTime)
+          // //console.log(this.selectedSheet[0].endTimestamp)
 
           if (
             record.startTime > this.selectedSheet[0].startTimestamp &&
@@ -229,14 +229,14 @@ export default {
     // var vm = this
     // if (vm.selectedSheet[0] != undefined) {
     //   if (this.selectedSheet[0] != undefined) {
-    //     // console.log(vm.callrecords.length)
+    //     // //console.log(vm.callrecords.length)
     //     var items = vm.callrecords.filter(function(e) {
     //       // e.startTimestamp = e.startTime
     //       if (
     //         moment(e.startTimestamp) > moment(vm.selectedSheet[0].startTimestamp) &&
     //         moment(e.startTimestamp) < moment(vm.selectedSheet[0].endTimestamp)
     //       ) {
-    //         console.log('hit')
+    //         //console.log('hit')
     //         return e
     //       } else {
     //       }
@@ -255,18 +255,18 @@ export default {
     // },
     selectedSheet(val) {
       if (this.callrecords != undefined) {
-        console.log('asdf')
+        //console.log('asdf')
         this.stuff = this.callrecords.filter(sheet => {
-          console.log(this.callrecords)
+          //console.log(this.callrecords)
           if (record.startTimestamp < val.endTime && record.startTimestamp > val.startTime) {
-            console.log('praise jesus')
+            //console.log('praise jesus')
             this.dailies.push(record)
           }
         })
       }
     },
   },
-  // console.log(new moment(this.selectedSheet[0].startTime).dayOfYear())
+  // //console.log(new moment(this.selectedSheet[0].startTime).dayOfYear())
   // var stuff = { timesheets: [], callrecords: [] }
   // var stsstarttime = new moment(this.selectedSheet[0].startTime)
   // var stsendtime = new moment(this.selectedSheet[0].endTime)
@@ -274,9 +274,9 @@ export default {
 
   // this.callrecords.forEach(record => {
   //   if (record.employee != undefined) {
-  //     // console.log(record.employee)
+  //     // //console.log(record.employee)
   //     // if (record.employee == vm.user.id || record.employee == 'WE8hmk7g4O') {
-  //     // console.log(record.startTimePretty)
+  //     // //console.log(record.startTimePretty)
   //     if (record.disposition == 'Answered') {
   //       record.icon = 'mdi-phone'
   //       record.color = 'success'
@@ -289,7 +289,7 @@ export default {
   //     } else {
   //       record.active = false
   //     }
-  //     // console.log(record)
+  //     // //console.log(record)
   //     record.startTimestamp = record.startTime
   //     record.endTimestamp = record.endTime
   //     myrecords.push(record)

@@ -68,6 +68,11 @@ export const router = new Router({
       component: () => import(/* webpackChunkName: "timesheetsView" */ './views/TimesheetsView.vue'),
     },
     {
+      path: '/calls',
+      name: View.CallsView,
+      component: () => import(/* webpackChunkName: "callsView" */ './views/CallsView.vue'),
+    },
+    {
       path: '/settings',
       name: View.Settings,
       component: () => import(/* webpackChunkName: "settings" */ './views/Settings.vue'),

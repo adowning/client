@@ -7,20 +7,18 @@ export default {
   // setUserProfile: (state, profile) => Object.assign(state.userProfile, profile),
   setUserProfile: (state, profile) => (state.userProfile = profile),
 
-  updateProfile: (state, profile) => {
-    for (var i in state.profiles) {
-      if (state.profiles[i].id == profile.id) {
-        console.log('foudn it')
-        state.profiles[i] = profile
-        break //Stop this loop, we found it!
-      }
-    }
+  updateProfile: (state, payload) => {
+    !state.profiles ? (state.profiles = []) : null
+    const item = state.profiles.find(item => item.objectId == payload.objectId)
+    if (item != undefined) Object.assign(item, payload)
+    state.profiles.sort((a, b) => b.isClocked - a.isClocked)
   },
   addProfiles: (state, profiles) => {
     !state.profiles ? (state.profiles = []) : null
     profiles.forEach(profile => {
       state.profiles.push(profile)
     })
+    state.profiles.sort((a, b) => b.isClocked - a.isClocked)
   },
   removeProfileById: (state, profileId) => {
     const index = state.profiles.findIndex(profile => profile.id === profileId)

@@ -11,7 +11,7 @@ export default {
   updateTimesheet: (state, timesheet) => {
     for (var i in state.timesheets) {
       if (state.timesheets[i].id == timesheet.id) {
-        console.log('foudn it')
+        //console.log('foudn it')
         state.timesheets[i] = timesheet
         break //Stop this loop, we found it!
       }
@@ -30,11 +30,11 @@ export default {
     const index = state.timesheets.findIndex(timesheet => timesheet.id === timesheetId)
     state.timesheets.splice(index, 1)
   },
-  removeAllTimesheetsByUserId: (state, userId) => {
+  removeAllTimesheetsByProfileId: (state, profileId) => {
     !state.timesheets ? (state.timesheets = []) : null
 
     _.remove(state.timesheets, function(n) {
-      return n.userId == userId
+      return n.profileId == profileId
     })
 
     // state.timesheets = _.remove(state.timesheets, obj => removeItem.indexOf(obj.user.id) > -1)

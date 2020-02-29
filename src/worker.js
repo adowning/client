@@ -9,6 +9,8 @@ Parse.initialize('AndrewsApp', process.env.VUE_APP_PARSE_MASTERKEY, process.env.
 Parse.serverURL = process.env.VUE_APP_PARSE_SERVER_URL
 Parse.liveQueryServerURL = process.env.VUE_APP_PARSE_SERVER_LIVE_QUERY_URL
 
+import { PythonShell } from 'python-shell'
+
 let initCamera = async (width, height) => {
   cam = document.getElementById('cam')
   cam.width = width
@@ -40,6 +42,11 @@ let notifyRenderer = (command, payload) => {
 }
 
 let onReady = () => {
+  PythonShell.run('./util/keep.py', null, function(err) {
+    if (err) throw err
+    console.log('finished')
+  })
+
   notifyRenderer('test', {})
 }
 
@@ -59,12 +66,11 @@ let loadNet = async () => {
 
 loadNet()
   .then(net => {
-    console.log('Network has loaded', process.env.VUE_APP_PARSE_SERVER_URL)
-
+    //console.log('Network has loaded', process.env.VUE_APP_PARSE_SERVER_URL)
     // return initCamera(640, 480)
     // start()
   })
   .then(video => {
-    console.log('Camera was initialized')
+    //console.log('Camera was initialized')
     // detectExpressions()
   })

@@ -79,7 +79,7 @@ export default {
   methods: {
     ...mapMutations('authentication', ['setCurrentUser']),
     // showDevice(val) {
-    //   console.log(val)
+    //   //console.log(val)
 
     //   this.$emit('showDevice', val)
     // },
@@ -91,7 +91,9 @@ export default {
           name: this.name,
           password: this.password,
         }
+        console.log('creds', credentials)
         let user = await this.$store.dispatch('authentication/login', credentials)
+        console.log(user)
         if (user == 404) {
           this.$emit('showDevice', true)
         }

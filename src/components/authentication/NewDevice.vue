@@ -59,11 +59,11 @@ export default {
     async registerDevice(label) {
       this.$store.dispatch('devices/registerDevice', label)
       function showLocation(val) {
-        console.log('val', val)
+        //console.log('val', val)
       }
     },
     showLocation(val) {
-      console.log(val)
+      //console.log(val)
     },
   },
 }

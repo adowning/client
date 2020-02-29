@@ -6,6 +6,11 @@ import { ipcRenderer } from 'electron'
 // import UsersDB from '@/firebase/users-db'
 import axios from 'axios'
 import { stat } from 'fs'
+const Pushy = require('pushy-electron')
+
+async function registerPushy() {
+  return await Pushy.register({ appId: '5e3f6f1b74ffaa115ddb215b' })
+}
 
 const api = axios.create({
   baseURL: 'https://api.ashdevtools.com',
@@ -19,26 +24,29 @@ export default {
   changeCurrentProfile: async ({ commit, dispatch }, payload) => {
     parseApi.changeCurrentProfile(payload)
   },
+
   login: async ({ commit, dispatch }, credentials) => {
     // commit('setCurrentUser', undefined)
     // commit('timesheets/setTimesheets', null, { root: true })
     // commit('callrecords/setCallrecords', null, { root: true })
-    return new Promise(async resolve => {
-      var result = await ipcRenderer.once('get-machine-id', async (event, data) => {
-        let user = await parseApi.loginUser(credentials.name, credentials.password, data)
-        console.log(user)
+    //console.log(credentials)
 
-        if (user == 404) {
-          resolve(404)
-        } else {
-          commit('setCurrentUser', user)
-          await parseApi.hydrateAll(user)
-          // await parseApi.startListening()
-          // const currentRouter = router.app.$route
-          router.push('/dashboard')
-        }
-      })
-      ipcRenderer.send('get-machine-id')
+    return new Promise(async resolve => {
+      // var data = await ipcRenderer.invoke('get-machine-id')
+      var data = await registerPushy()
+      //console.log(credentials)
+      console.log(';')
+
+      let user = await parseApi.loginUser(credentials.name, credentials.password, data)
+      console.log(user)
+
+      if (user == 404) {
+        resolve(404)
+      } else {
+        commit('setCurrentUser', user)
+        await parseApi.hydrateAll(user)
+        router.push('/dashboard')
+      }
     })
   },
 
@@ -47,10 +55,11 @@ export default {
     // commit('timesheets/setTimesheets', null, { root: true })
     // commit('callrecords/setCallRecords', null, { root: true })
     if (!user) dispatch('logout', { root: true })
+
     commit('setCurrentUser', user)
     await parseApi.hydrateAll(user)
+    return
     // const currentRouter = router.app.$route
-    router.push('/dashboard')
   },
 
   setupSubscriptionCurentUser: async ({ commit, dispatch }, id) => {

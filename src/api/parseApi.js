@@ -2,26 +2,17 @@ import moment from 'moment'
 import { fetchSdrs, Sdr2Callrecord } from './onsipHelpers'
 import Vue from 'vue'
 import { createNamespacedHelpers } from 'vuex'
+import { handleParseError } from '../plugins/parse'
+import { ParseQuery } from './ParseQuery'
+import CreateQuery from './CreateQuery'
+import { ipcMain, ipcRenderer } from 'electron'
 
 export default class ParseApi {
-  constructor() {
-    //    this.watchers = []
-    // this.store = options.store
-    // //    this.name = options.name
-    // this.vue = options.vue
-  }
+  static device
+  constructor(store, device) {
+    this.store = store
+    this.device = device
 
-  async init(options) {
-    this.store = options.store
-    // Parse.liveQueryServerURL = 'ws://XXXX'
-
-    // const classes = await this.getclasses()
-    // Parse.LiveQuery.on('open', () => {
-    //   console.log('socket connection established')
-    // })
-    // Parse.LiveQuery.on('error', error => {
-    //   console.log(error)
-    // })
     this.client = new Parse.LiveQueryClient({
       applicationId: 'AndrewsApp',
       // serverURL: 'ws://parse-andrews.herokuapp.com/parse',
@@ -33,14 +24,37 @@ export default class ParseApi {
       this.handleParseError(error)
     })
     this.client.on('open', () => {
-      console.log('connected to live query server')
+      //console.log('connected to live query server')
     })
     this.client.open()
   }
-
   async handleParseError(err) {
-    console.log(err.code)
+    console.error(err)
     switch (err.code) {
+      case 209:
+        console.log('handleing err')
+        Parse.User.logOut().then(() => {
+          updateBus.$emit('showSnackBar', {
+            show: true,
+            color: 'error',
+            icon: 'mdi-debug',
+            text: `device not found`,
+            code: 444,
+          })
+          this.store.dispatch('authentication/logout')
+        })
+      case 444:
+        console.log('handleing err')
+        Parse.User.logOut().then(() => {
+          updateBus.$emit('showSnackBar', {
+            show: true,
+            color: 'error',
+            icon: 'mdi-debug',
+            text: `device not found`,
+            code: 444,
+          })
+          this.store.dispatch('authentication/logout')
+        })
       case 101:
         if (err.message == 'Object not found.') {
           updateBus.$emit('showSnackBar', {
@@ -129,6 +143,27 @@ export default class ParseApi {
       // ... // Other Parse API errors that you want to explicitly handle
     }
   }
+
+  async exists(thisClass, field, obj) {
+    var ThisClass = Parse.Object.extend(thisClass),
+      query = new Parse.Query(ThisClass)
+    query.equalTo(field, obj)
+    var exists = await query.first()
+    return exists != undefined
+  }
+  // async getDeviceById(machineId) {
+  //   // var deviceId = await store.dispatch('devices/getCurrentDevice')
+  //   // var Device = Parse.Object.extend('Device')
+  //   var query = ParseQuery.getQuery()
+  //   var query = new Parse.Query(Device)
+  //   query.equalTo('deviceId', deviceId)
+  //   return await query.first()
+  // }
+  // async registerDevice(machineId) {
+  //   var Device = Parse.Object.extend('Device')
+  //   var device = new Parse.Object(Device)
+  //   return await device.save()
+  // }
   async getclasses() {
     try {
       return await Parse.Cloud.run('getLiveQueryList')
@@ -151,7 +186,14 @@ export default class ParseApi {
       this.handleParseError(err)
     }
   }
-
+  // async getDeviceById(machineId) {
+  //   var Device = Parse.Object.extend('Device')
+  //   var query = new Parse.Query(Device)
+  //   query.equalTo('deviceId', machineId)
+  //   var device = await query.first()
+  //   //console.log(device)
+  //   return device
+  // }
   currentUserProfile() {
     try {
       return Parse.User.current().get('profile')
@@ -160,23 +202,38 @@ export default class ParseApi {
     }
   }
 
+  // async registerDevice(deviceInfo) {
+  //   let Device = Parse.Object.extend('Device')
+  //   let device = new Device(deviceInfo)
+  //   // let query = CreateQuery.createQuery('Device')
+  //   try {
+  //     device = await device.save()
+  //     return device.toJSON()
+  //   } catch (err) {
+  //     this.handleParseError(err)
+  //   }
+  // }
+
   async loginUser(username, password, machineId) {
+    //console.log(username, password, machineId)
+
     var parseUser
-    var Device = Parse.Object.extend('Device')
-    var query = new Parse.Query(Device)
-    query.equalTo('deviceId', machineId + 'cc')
-    var device = await query.first()
-    console.log(device)
-    if (device == undefined) {
-      return 404
-    }
+    // var Device = Parse.Object.extend('Device')
+    // var query = new Parse.Query(Device)
+    // query.equalTo('deviceId', machineId)
+    // var device = await query.first()
+    // //console.log(device)
+    // if (device == undefined) {
+    //   // return 404
+    // }
     try {
-      parseUser = await Parse.User.logIn(username, password)
+      parseUser = await Parse.User.logIn(username, password, { installationId: machineId })
 
-      var profile = Parse.User.current().get('profile')
-      profile.set('currentDevice', device)
-      await profile.save()
-
+      // var profile = Parse.User.current().get('profile')
+      // parseUser.set('currentDevice', device)
+      // this.store.commit('profiles/setUserProfile', profile)
+      await ipcRenderer.send('user-login', parseUser.toJSON())
+      await parseUser.save()
       return parseUser.toJSON()
     } catch (err) {
       this.handleParseError(err)
@@ -189,7 +246,8 @@ export default class ParseApi {
         this.store.dispatch('authentication/logout')
       })
       .catch(err => {
-        this.handleParseError(err)
+        console.log(err)
+        // this.handleParseError(err)
       })
   }
   async setUserAvatar(file, form) {
@@ -199,37 +257,12 @@ export default class ParseApi {
     var Profile = Parse.Object.extend('Profile')
     var query = new Parse.Query(Profile)
     var profile = await query.get(Parse.User.current().get('profile').id)
-    console.log(profile)
+    //console.log(profile)
 
     try {
       await parseFile.save()
       profile.set('avatar', parseFile)
       await profile.save()
-    } catch (err) {
-      return this.handleParseError(err)
-    }
-    // try {
-    //   var user = await query.get(this.currentUser().objectId)
-    //   user.set('avatar', this.$parseFile)
-    //   await user.save()
-    //   // this.store.commit('authentication/setCurrentUser', user.toJSON())
-    // } catch (err) {
-    //   this.handleParseError(err)
-    // }
-  }
-
-  async setUserAvatarx(file, form) {
-    var parseFile = new Parse.File(file, {
-      base64: form.image.currentSrc,
-    })
-    var payload = {
-      field: 'avatar',
-      value: parseFile,
-    }
-    try {
-      await parseFile.save()
-      const params = { id: Parse.User.current().id, payload: payload }
-      const ratings = await Parse.Cloud.run('updateUser', params)
     } catch (err) {
       return this.handleParseError(err)
     }
@@ -247,9 +280,11 @@ export default class ParseApi {
     if (!u.isDataAvailable()) {
       await myObject.fetch()
     }
-    this.hydrateUserProfile(u)
-    this.hydrateProfiles()
-    this.hydrateTimesheetsByUser(u)
+    var profile = u.get('profile')
+    // this.hydrateUserProfile(u)
+    // this.hydrateProfiles()
+    this.hydrateUsers()
+    this.hydrateTimesheetsByUser(profile)
     this.hydrateCalls()
     this.startListening()
   }
@@ -257,31 +292,31 @@ export default class ParseApi {
   async startListening() {
     const sessionToken = await (await Parse.Session.current()).get('sessionToken')
     const liveQueryList = await Parse.Cloud.run('getLiveQueryList')
-    // console.log(JSON.parse(liveQueryList).classNames)
+    // //console.log(JSON.parse(liveQueryList).classNames)
     for (var schema of JSON.parse(liveQueryList).classNames) {
-      // console.log(schema, sessionToken)
+      // //console.log(schema, sessionToken)
       let query = new Parse.Query(schema)
       // let subscription = this.client.subscribe(query, sessionToken)
       try {
         let subscription = await query.subscribe()
         subscription.on('update', (object, original) => {
-          console.log('update', schema)
+          //console.log('update', schema)
           if (object.className == 'Profile' && object.id == Parse.User.current().get('profile').id) {
-            console.log('setting user profile')
+            //console.log('setting user profile')
             this.store.commit('profiles/setUserProfile', object.toJSON())
             this.store.commit('profiles/updateProfile', object.toJSON())
           }
           if (object.className == 'Profile' && object.id != Parse.User.current().get('profile').id) {
-            console.log('setting profile')
+            //console.log('setting profile')
             this.store.commit('profiles/updateProfile', object.toJSON())
           }
           if (object.className == 'Timesheet') {
-            console.log('updating timesheet', object)
+            //console.log('updating timesheet', object)
             this.store.commit('timesheets/updateTimesheet', object.toJSON())
           }
         })
         subscription.on('create', object => {
-          console.log('created ', object)
+          //console.log('created ', object)
           if (object.className == 'Timesheet') {
             this.store.commit('timesheets/addTimesheet', object.toJSON())
           }
@@ -289,72 +324,50 @@ export default class ParseApi {
       } catch (err) {
         return this.handleParseError(err)
       }
-
-      // subscription.on('delete', (object, original) => {
-      //   console.log(object)
-      //   this.store.dispatch('delete', schema, object, original)
-      // })
-      // subscription.on('open', () => {
-      //   console.log('subscription opened')
-      // })
-      // query.find({
-      //   success: results => {
-      //     console.log(JSON.stringify(results))
-      //   },
-      //   error: err => {
-      //     console.log('err : ' + JSON.stringify(err))
-      //   },
-      // })
     }
     return null
   }
 
-  async hydrateUserProfile(u) {
-    const query = new Parse.Query('Profile')
-    console.log(u)
-    console.log(u.get('username'))
-    query.equalTo('username', u.get('username'))
-    try {
-      var _profile = await query.first()
-      console.log(_profile)
+  // async hydrateUserProfile(u) {
+  //   const query = new Parse.Query('Profile')
+  //   query.equalTo('username', u.get('username'))
+  //   try {
+  //     var _profile = await query.first()
+  //     await _profile.unPin()
+  //     await _profile.pinWithName('UserProfile')
+  //     const profile = _profile.toJSON()
+  //     return this.store.commit('profiles/setUserProfile', profile)
+  //   } catch (err) {
+  //     console.error(err)
+  //     return this.handleParseError(err)
+  //   }
+  // }
 
-      await _profile.unPin()
-      await _profile.pinWithName('UserProfile')
-      // let subscription = await query.subscribe()
+  async createTimesheetForCurrentProfile() {
+    var d = this.currentDevice
 
-      // subscription.on('update', (object, original) => {
-      //   console.log('update')
-      //   // console.log(original)
-      //   // console.log(object)
-      //   // this.store.dispatch('update', schema, object, original)
-      // })
-      // console.log(subscription)
-      const profile = _profile.toJSON()
-      this.store.commit('profiles/setUserProfile', profile)
-    } catch (err) {
-      console.log(err)
-      return this.handleParseError(err)
-    }
+    await Parse.Cloud.run('clock-user', {
+      username: 'admin',
+    })
   }
-
-  async hydrateProfiles() {
-    const query = new Parse.Query('Profile')
+  async hydrateUsers() {
+    const query = new Parse.Query('User')
     query.limit(200)
     var _profiles
     try {
       _profiles = await query.find()
-      await Parse.Object.unPinAllObjectsWithName('Profile')
-      await Parse.Object.pinAllWithName('Profile', _profiles)
+      await Parse.Object.unPinAllObjectsWithName('User')
+      await Parse.Object.pinAllWithName('User', _profiles)
       const profiles = _profiles.map(profile => profile.toJSON())
       this.store.commit('profiles/removeAllProfiles')
       this.store.commit('profiles/addProfiles', profiles)
       // const squery = new Parse.Query('Profile')
       // let subscription = await client.subscribe(squery, )
       // subscription.on('update', (object, original) => {
-      //   console.log('update')
+      //   //console.log('update')
       // })
     } catch (err) {
-      console.log(err)
+      console.error(err)
       return this.handleParseError(err)
     }
   }
@@ -368,20 +381,20 @@ export default class ParseApi {
     // }
     const query = new Parse.Query('Profile')
     var profile = await query.get(_profile.objectId)
-    // console.log(profile)
+    // //console.log(profile)
     profile.set(payload.field, payload.value)
     try {
       await profile.save()
     } catch (err) {
-      console.log(err)
+      console.error(err)
       return this.handleParseError(err)
     }
   }
 
-  async hydrateTimesheetsByUser(parseUser) {
+  async hydrateTimesheetsByUser(profile) {
     const query = new Parse.Query('Timesheet')
     query.descending('startTimestamp')
-    query.equalTo('user', parseUser)
+    query.equalTo('profile', profile)
     query.limit(100)
     var _sheets
     try {
@@ -391,30 +404,30 @@ export default class ParseApi {
       await Parse.Object.pinAllWithName('UsersTimesheets', _sheets)
       const sheets = _sheets.map(sheet => sheet.toJSON())
 
-      this.store.commit('timesheets/removeAllTimesheetsByUserId', parseUser.id)
+      this.store.commit('timesheets/removeAllTimesheetsByProfileId', profile.id)
       this.store.commit('timesheets/addTimesheets', sheets)
     } catch (err) {
-      console.log(err)
+      console.error(err)
       return this.handleParseError(err)
     }
   }
 
   async hydrateCalls() {
     try {
-      var query = new Parse.Query('CallRecord')
+      var query = new Parse.Query('Callrecord')
       query.descending('startTime')
       // query.equalTo('employee', parseUser.id)
       query.limit(500)
 
       var _callrecords = await query.find()
+
       await Parse.Object.unPinAllObjectsWithName('Callrecords')
       await Parse.Object.pinAllWithName('Callrecords', _callrecords)
       const callrecords = _callrecords.map(callrecord => callrecord.toJSON())
-      console.log(callrecords[0])
       this.store.commit('callrecords/removeAllCallrecords')
       this.store.commit('callrecords/addCallrecords', callrecords)
     } catch (err) {
-      console.log(err)
+      console.error(err)
       return this.handleParseError(err)
     }
   }
@@ -491,7 +504,7 @@ export default class ParseApi {
         // tasks.push(parseObjectToObject(t))
         tasks.push(t.toJSON())
       })
-      // console.log(projects,tasks)
+      // //console.log(projects,tasks)
       return Promise.resolve({ projects: projects, tasks: tasks })
     })
   }

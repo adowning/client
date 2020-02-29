@@ -25,7 +25,7 @@ export default {
     this.$updateBus.$on('showSnackBar', async snackbar => {
       this.snackbar = Object.assign(this.snackbar, snackbar)
       if (snackbar.errorCode == 209) {
-        console.log('i got a 209')
+        //console.log('i got a 209')
         // Parse.User.logOut()
         parseApi.logoutUser()
         this.$router.push('/LOGIN')

@@ -2,13 +2,13 @@ import Parse from 'parse'
 export default class DollarParse {
   constructor(reqs) {
     if (reqs.length > 0) {
-      console.log(reqs)
+      //console.log(reqs)
     }
     this.reqs = reqs
   }
   launch() {
     this.reqs.forEach(x => {
-      console.log(x)
+      //console.log(x)
       x.launch()
     })
   }
@@ -22,7 +22,7 @@ export default class DollarParse {
     await Promise.all(this.reqs.map(x => x.promise))
   }
   get logIn() {
-    console.log('logging in')
+    //console.log('logging in')
     try {
       return Parse.User.logIn.bind(Parse.User)
     } catch (e) {

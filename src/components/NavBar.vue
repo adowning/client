@@ -11,9 +11,11 @@
     <v-spacer />
     <div v-if="isUserLoggedIn && networkOnLine" class="nav-item">
       <v-icon class="header-buttons pr-5">mdi-magnify</v-icon>
-      <v-icon class="header-buttons pr-8">mdi-bell</v-icon>
+      <v-badge :content="getOpenTasksByProfile" :value="getOpenTasksByProfile" color="green" overlap>
+        <v-icon class="header-buttons ">mdi-bell</v-icon>
+      </v-badge>
     </div>
-    <v-icon class="header-buttons ">mdi-close</v-icon>
+    <v-icon class="header-buttons pl-8 ">mdi-close</v-icon>
   </v-app-bar>
 </template>
 
@@ -28,13 +30,14 @@ export default {
   },
   mounted() {
     try {
-      console.log(parseApi.currentUser('firstName') + ' is logged in to parse')
+      //console.log(parseApi.currentUser('firstName') + ' is logged in to parse')
     } catch (e) {
-      console.log('user is logged out of parse')
+      //console.log('user is logged out of parse')
     }
   },
   computed: {
     ...mapGetters('authentication', ['isUserLoggedIn']),
+    ...mapGetters('tasks', ['getOpenTasksByProfile']),
     ...mapState('authentication', ['user']),
     ...mapState('app', ['networkOnLine', 'appTitle', 'appShortTitle']),
   },

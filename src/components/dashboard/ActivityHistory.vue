@@ -222,7 +222,7 @@ import moment from 'moment'
 
 function filterByValue(array, string) {
   return array.filter(function(item) {
-    console.log(item.type.toLowerCase(), string.toLowerCase())
+    //console.log(item.type.toLowerCase(), string.toLowerCase())
     return item.type.toLowerCase() == string.toLowerCase()
   })
   // return array.filter(o =>
@@ -336,13 +336,13 @@ export default {
       this.offsetTop = e.target.scrollTop
     },
     async getRecording(activity) {
-      console.log('asdf', activity)
+      //console.log('asdf', activity)
       axios({
         url: 'https://firebasestorage.googleapis.com/v0/b/phonerecs/o/' + activity.recordingLocation,
         method: 'GET',
         responseType: 'blob', // important
       }).then(response => {
-        console.log(response)
+        //console.log(response)
         const url = window.URL.createObjectURL(new Blob([response.data]))
         const link = document.createElement('a')
         link.href = url
@@ -352,7 +352,7 @@ export default {
       })
 
       // var dl = await downloadRecording(activity)
-      // console.log(dl)
+      // //console.log(dl)
     },
   },
   computed: {
@@ -421,7 +421,7 @@ export default {
   },
   watch: {
     timecards(val) {
-      console.log(val)
+      //console.log(val)
       if (item.location == undefined) item.location = 'Store'
       item.icon = 'mdi-clock-outline'
       item.color = 'primary'

@@ -26,7 +26,7 @@ export const handleParseError = (store, error) => {
 
 async function setupQueries() {
   const parse = this.$options.parse
-  console.log(parse)
+  //console.log(parse)
   if (!parse || parse == undefined) {
     this.$parse = new DollarParse([])
     return
@@ -57,20 +57,20 @@ async function setupQueries() {
 
 async function launchQueries() {
   if (!this.$parse) return
-  // console.log('launching', this.$parse)
+  // //console.log('launching', this.$parse)
 
   this.$parse.launch()
 }
 
 class ParseVue {
   constructor(reqs) {
-    console.log(reqs)
+    //console.log(reqs)
     this.reqs = reqs
   }
   async install(Vue, options) {
-    console.log('Installing the parse plugin')
+    //console.log('Installing the parse plugin')
     Parse.LiveQuery.on('open', () => {
-      console.log('socket connection established')
+      //console.log('socket connection established')
     })
     await Parse.initialize(
       process.env.VUE_APP_PARSE_SERVER_APPLICATION_ID,
@@ -81,7 +81,7 @@ class ParseVue {
     Parse.serverURL = process.env.VUE_APP_PARSE_SERVER_URL
     Parse.liveQueryServerURL = process.env.VUE_APP_PARSE_SERVER_LIVE_QUERY_URL
 
-    // console.log(process.env.VUE_APP_PARSE_SERVER_LIVE_QUERY_URL)
+    // //console.log(process.env.VUE_APP_PARSE_SERVER_LIVE_QUERY_URL)
     // var client = new Parse.LiveQueryClient({
     //   applicationId: process.env.VUE_APP_PARSE_SERVER_APPLICATION_ID,
     //   serverURL: 'ws://localhost:1338/parse', // Example: 'wss://livequerytutorial.back4app.io'
@@ -96,15 +96,15 @@ class ParseVue {
     // var subscription = client.subscribe(query)
     // var s = client.subscribe(q)
     // s.on('update', object => {
-    //   console.log('update', object)
+    //   //console.log('update', object)
     //   // context.dispatch('update' + className, object)
     // })
     // const liveQueryList = await Parse.Cloud.run('getLiveQueryList')
-    // console.log(liveQueryList)
+    // //console.log(liveQueryList)
     // // const query = new Parse.Query('Timesheet')
     // // let subscription = await query.subscribe()
     // subscription.on('update', object => {
-    //   console.log('update', object)
+    //   //console.log('update', object)
     //   // context.dispatch('update' + className, object)
     // })
 
@@ -114,15 +114,15 @@ class ParseVue {
     //     const query = new Parse.Query(className)
     //
     //     subscription.on('create', object => {
-    //       console.log('create')
+    //       //console.log('create')
     //       context.dispatch('create' + className, object)
     //     })
     //     subscription.on('update', object => {
-    //       console.log('update')
+    //       //console.log('update')
     //       context.dispatch('update' + className, object)
     //     })
     //     subscription.on('delete', object => {
-    //       console.log('delete')
+    //       //console.log('delete')
     //       context.dispatch('delete' + className, object)
     //     })
     //   }
@@ -157,7 +157,7 @@ class ParseVue {
         code: e.code,
       })
 
-    console.log('finished installing parse')
+    //console.log('finished installing parse')
   }
 
   launch() {

@@ -40,12 +40,12 @@ export class ParseRequest {
   setupHandler() {
     this.promise
       .then(result => {
-        // console.log(result)
+        // //console.log(result)
 
-        // console.log(this.updateData(result))
-        // console.log(`${this.name}/update`, this.updateData(result).toJSON())
+        // //console.log(this.updateData(result))
+        // //console.log(`${this.name}/update`, this.updateData(result).toJSON())
 
-        // console.log([this.name]`/${this.definition.action}`, this.updateData(result))
+        // //console.log([this.name]`/${this.definition.action}`, this.updateData(result))
         // store.dispatch(`${this.name}/update`, this.updateData(result).toJSON())
         this.vue.$data[this.name] = this.updateData(result)
       })

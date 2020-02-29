@@ -153,7 +153,7 @@ export default {
         field: e.srcElement.id,
         value: e.target.value,
       }
-      console.log(update)
+      //console.log(update)
       await this.$store.dispatch('profiles/changeCurrentProfile', update)
 
       this.$store.dispatch('setLoading', false)
@@ -188,7 +188,7 @@ export default {
     },
 
     handlerError(message, type, xhr) {
-      console.log(xhr)
+      //console.log(xhr)
       this.message = 'Oops! Something went wrong...'
     },
     validate() {
@@ -203,7 +203,7 @@ export default {
       this.$refs.form.resetValidation()
     },
     uploadPhoto() {
-      console.log('asdf')
+      //console.log('asdf')
     },
     setErrorMessage(errorMessage) {
       this.errorMessage = errorMessage

@@ -1,25 +1,72 @@
 <template>
   <v-list nav flat dense class=" ml-1 pl-0">
-    <v-list-item-group v-model="model" active-class="border" class=" ml-1 px-0" color="indigo" transparent>
-      <!-- <div
+    <v-container id="scroll-target" style="max-height: 300px" class="mx-0 px-0 overflow-y-auto">
+      <v-list-item-group
+        v-model="model"
+        active-class="border"
+        class=" ml-1 px-0"
+        color="indigo"
+        transparent
+        v-scroll:#scroll-target="onScroll"
+      >
+        <!-- <div
         id="scroll-target"
         ref="container"
         class="flex-grow-1 overflow-y-scroll scrollbar"
       > -->
-      <app-infinite-hits>
-        <template slot="item" slot-scope="{ item }">
-          <v-list-item style="background-color:#27293D;" class="mb-1 mx-0 px-1">
-            <v-row justify="start" class=" px-1" style="max-width: 55px;">
+
+        <app-infinite-hits>
+          <template slot="item" slot-scope="{ item }">
+            <v-list-item style="background-color:#27293D;" class="mb-1 mx-0 px-1">
+              <v-row justify="start" class=" px-1" style="max-width: 55px;">
+                <v-list-item-action align="center" class="mx-0 px-0">
+                  <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-x>
+                    <template v-slot:activator="{ on }">
+                      <v-btn icon>
+                        <v-icon color="success" v-on="on">mdi-phone</v-icon>
+                      </v-btn>
+                    </template>
+                    <v-list>
+                      <v-list-item>
+                        <v-list-item-title>{{ item.phone1 }}</v-list-item-title>
+                      </v-list-item>
+                    </v-list>
+                  </v-menu>
+
+                  <!-- <v-list-item-action-text
+                  ><ais-highlight :hit="item" attribute="phone1"
+                /></v-list-item-action-text> -->
+                </v-list-item-action>
+                <!-- <customer-detail :customer="item"></customer-detail> -->
+                <!-- <v-list-item-action class="mx-0 mr-4"  style="max-width: 10px;" >
+                      <v-btn icon style="max-width: 10px;">
+                        <v-icon color="info">mdi-information-outline</v-icon>
+                      </v-btn>
+                    </v-list-item-action> -->
+              </v-row>
+              <v-list-item-content style="max-width: 190px;">
+                <v-list-item-title><ais-highlight :hit="item" attribute="accountName"/></v-list-item-title>
+                <v-list-item-subtitle><ais-highlight :hit="item" attribute="searchAddress"/></v-list-item-subtitle>
+                <v-list-item-subtitle> {{ item.city }} {{ item.zip }} {{ item.state }} </v-list-item-subtitle>
+                <!-- <v-list-item-subtitle
+                style=" color: #FD5D93; "
+                @click="callCustomer(item.phone1)"
+                ><ais-highlight :hit="item" attribute="phone1"
+              /></v-list-item-subtitle> -->
+              </v-list-item-content>
               <v-list-item-action align="center" class="mx-0 px-0">
-                <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-x>
+                <v-menu :v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-x>
                   <template v-slot:activator="{ on }">
                     <v-btn icon>
-                      <v-icon color="success" v-on="on">mdi-phone</v-icon>
+                      <v-icon color="info" v-on="on">mdi-dots-vertical</v-icon>
                     </v-btn>
                   </template>
                   <v-list>
                     <v-list-item>
-                      <v-list-item-title>{{ item.phone1 }}</v-list-item-title>
+                      <v-list-item-title>Create new Workorder</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item>
+                      <v-list-item-title>Open in SrvMonster</v-list-item-title>
                     </v-list-item>
                   </v-list>
                 </v-menu>
@@ -28,49 +75,12 @@
                   ><ais-highlight :hit="item" attribute="phone1"
                 /></v-list-item-action-text> -->
               </v-list-item-action>
-              <!-- <customer-detail :customer="item"></customer-detail> -->
-              <!-- <v-list-item-action class="mx-0 mr-4"  style="max-width: 10px;" >
-                      <v-btn icon style="max-width: 10px;">
-                        <v-icon color="info">mdi-information-outline</v-icon>
-                      </v-btn>
-                    </v-list-item-action> -->
-            </v-row>
-            <v-list-item-content style="max-width: 190px;">
-              <v-list-item-title><ais-highlight :hit="item" attribute="accountName"/></v-list-item-title>
-              <v-list-item-subtitle><ais-highlight :hit="item" attribute="searchAddress"/></v-list-item-subtitle>
-              <v-list-item-subtitle> {{ item.city }} {{ item.zip }} {{ item.state }} </v-list-item-subtitle>
-              <!-- <v-list-item-subtitle
-                style=" color: #FD5D93; "
-                @click="callCustomer(item.phone1)"
-                ><ais-highlight :hit="item" attribute="phone1"
-              /></v-list-item-subtitle> -->
-            </v-list-item-content>
-            <v-list-item-action align="center" class="mx-0 px-0">
-              <v-menu :v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-x>
-                <template v-slot:activator="{ on }">
-                  <v-btn icon>
-                    <v-icon color="info" v-on="on">mdi-dots-vertical</v-icon>
-                  </v-btn>
-                </template>
-                <v-list>
-                  <v-list-item>
-                    <v-list-item-title>Create new Workorder</v-list-item-title>
-                  </v-list-item>
-                  <v-list-item>
-                    <v-list-item-title>Open in SrvMonster</v-list-item-title>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-
-              <!-- <v-list-item-action-text
-                  ><ais-highlight :hit="item" attribute="phone1"
-                /></v-list-item-action-text> -->
-            </v-list-item-action>
-          </v-list-item>
-        </template>
-      </app-infinite-hits>
-      <!-- </div> -->
-    </v-list-item-group>
+            </v-list-item>
+          </template>
+        </app-infinite-hits>
+        <!-- </div> -->
+      </v-list-item-group>
+    </v-container>
   </v-list>
 </template>
 
@@ -94,7 +104,7 @@ export default {
   },
 
   // onClickItem(e) {
-  //   console.log('click')
+  //   //console.log('click')
   //   tabStore.newTab({
   //     url: this.item.url,
   //     options: { viewId: e.altKey ? 'secondary' : 'primary' }

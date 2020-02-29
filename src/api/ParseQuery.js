@@ -88,7 +88,7 @@ export class ParseQuery extends ParseRequest {
           this.pushData(data)
         })
         this.subscription.on('update', object => {
-          console.log(object)
+          //console.log(object)
           const data = this.updateData(object)
           const item = this.findDataIndex(x => x.id === object.id)
           if (item == -1) this.pushData(data)

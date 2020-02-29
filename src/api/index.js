@@ -27,19 +27,19 @@ import './parseApi'
 //     this.reqs = reqs
 //   }
 //   async install(vue, options) {
-//     console.log('Installing the CommentsOverlay plugin!')
+//     //console.log('Installing the CommentsOverlay plugin!')
 //     if (!options) throw new TypeError('You must provide parse options')
 //     if (!options.parse) options.parse = 'parse'
 //     Parse.initialize(options.appId, options.key, options.key)
 //     Parse.serverURL = options.serverURL
 //     Parse.liveQueryServerURL = options.liveQueryServerURL
 //     var user = Parse.User.current()
-//     console.log(user)
+//     //console.log(user)
 //     if (user != null) {
 //       await options.store.dispatch('initialize')
 //     }
 //     global['vue-parse-onerror'] = options.onerror
-//     console.log('finished installing parse')
+//     //console.log('finished installing parse')
 //   }
 
 //   launch() {

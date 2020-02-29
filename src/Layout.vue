@@ -279,7 +279,7 @@ export default {
       this.$store.dispatch('LOGOUT')
     },
     handleWebviewPages(webview, page) {
-      console.log(webview, page)
+      //console.log(webview, page)
       if (webview) {
         if (this.$router.currentRoute.name == 'webdev') {
           this.updateBus.$emit('webviewPageChange', { wp: page })

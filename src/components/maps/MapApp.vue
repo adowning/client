@@ -32,8 +32,8 @@
 
 <script>
 import HereMap from '@/components/maps/HereMap.vue'
-console.log(process.env.VUE_APP_HERE_APPID)
-console.log(process.env.VUE_APP_HERE_API_KEY)
+//console.log(process.env.VUE_APP_HERE_APPID)
+//console.log(process.env.VUE_APP_HERE_API_KEY)
 
 export default {
   name: 'mapApp',

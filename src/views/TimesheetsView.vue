@@ -94,7 +94,7 @@ export default {
       var total = 0
       this.weekSheets.forEach(sheet => {
         total += sheet.duration.hours * 60 + sheet.duration.minutes
-        console.log(this.$moment(sheet.inTimestamp).format('ddd hh:mm a'))
+        //console.log(this.$moment(sheet.inTimestamp).format('ddd hh:mm a'))
       })
       return Math.round(total / 60)
     },

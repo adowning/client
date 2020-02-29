@@ -5,7 +5,7 @@ export default {
    * Fetch timesheets of current loggedin user
    */
   getUserTimesheets: async ({ rootState, commit }, user) => {
-    console.log(user)
+    //console.log(user)
     const timesheets = await getTimesheetsByUser(user)
     commit('addTimesheets', timesheets)
   },
