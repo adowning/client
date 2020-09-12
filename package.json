@@ -31,7 +31,7 @@
     "js-cookie": "^2.2.1",
     "less-loader": "^5.0.0",
     "moment": "^2.24.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "node-machine-id": "^1.1.12",
     "parse": "^2.11.0",
     "parse-cache": "^0.0.13",
